@@ -1,22 +1,11 @@
 import { Module } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { drizzle } from 'drizzle-orm/mysql2';
-import mysql from 'mysql2/promise';
 
-import { DRIZZLE } from '@/drizzle/database-connection';
+import { DrizzleModule } from '@/modules/database/drizzle/drizzle.module';
+import { DrizzleService } from '@/modules/database/drizzle/drizzle.service';
 
 @Module({
-  providers: [
-    {
-      provide: DRIZZLE,
-      inject: [ConfigService],
-      useFactory: async (configService: ConfigService) => {
-        const databaseURL = configService.get<string>('DATABASE_URL');
-        const pool = mysql.createPool(databaseURL);
-        return drizzle(pool);
-      },
-    },
-  ],
-  exports: [DRIZZLE],
+  imports: [DrizzleModule],
+  providers: [DrizzleService],
+  exports: [DrizzleModule, DrizzleService],
 })
 export class DatabaseModule {}
