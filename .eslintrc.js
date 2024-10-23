@@ -8,6 +8,7 @@ module.exports = {
   plugins: [
     '@typescript-eslint/eslint-plugin',
     'simple-import-sort',
+    'drizzle'
   ],
   extends: [
     'plugin:@typescript-eslint/recommended',
@@ -22,6 +23,8 @@ module.exports = {
   rules: {
     'simple-import-sort/imports': 'error',
     'simple-import-sort/exports': 'error',
+    'drizzle/enforce-delete-with-where': "error",
+    'drizzle/enforce-update-with-where': "error",
     '@typescript-eslint/interface-name-prefix': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
