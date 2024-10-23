@@ -1,3 +1,4 @@
+import { relations } from 'drizzle-orm';
 import {
   bigint,
   index,
@@ -26,7 +27,19 @@ export const usersToGroups = mysqlTable(
     ),
   },
   (table) => ({
+    // Creating a composite primary key and an index
     pk: primaryKey({ columns: [table.userId, table.groupId] }),
     userIndex: index('user_index').on(table.userId),
   }),
 );
+
+export const usersToGroupsRelations = relations(usersToGroups, ({ one }) => ({
+  user: one(users, {
+    fields: [usersToGroups.userId],
+    references: [users.id],
+  }),
+  group: one(groups, {
+    fields: [usersToGroups.groupId],
+    references: [groups.id],
+  }),
+}));
