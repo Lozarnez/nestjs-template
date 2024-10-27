@@ -42,19 +42,22 @@ export class PostService {
   }
 
   async findOne(id: number) {
-    return this.drizzle.db.query.posts.findFirst({
-      where: (posts, { eq }) => eq(posts.id, id),
-      with: {
-        author: {
-          with: {
-            usersToGroups: {
-              with: {
-                group: true,
-              },
-            },
-          },
-        },
-      },
+    // return this.drizzle.db.query.posts.findFirst({
+    //   where: (posts, { eq }) => eq(posts.id, id),
+    //   with: {
+    //     author: {
+    //       with: {
+    //         usersToGroups: {
+    //           with: {
+    //             group: true,
+    //           },
+    //         },
+    //       },
+    //     },
+    //   },
+    // });
+    return this.postRepository.findOne({
+      where: { id },
     });
   }
 
