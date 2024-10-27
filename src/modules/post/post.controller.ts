@@ -9,13 +9,15 @@ import {
   Patch,
   Post,
   Query,
-  // UsePipes,
+  UsePipes,
   // ValidationPipe,
 } from '@nestjs/common';
 
-import { CreatePostDto } from './dto/create-post.dto';
+// import { CreatePostDto } from './dto/create-post.dto';
+import { CreatePostZodDto, createPostZodDto } from './dto/create-post-zod.dto';
 import { IdParamDto } from './dto/idParam.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
+import { ZodValidationPipe } from './pipes/zodValidationPipe';
 // import { ParseIdPipe } from './pipes/parseIdPipe';
 import { PostService } from './post.service';
 
@@ -24,12 +26,12 @@ export class PostController {
   constructor(private readonly postService: PostService) {}
 
   @Post()
-  // @UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
+  @UsePipes(new ZodValidationPipe(createPostZodDto))
   create(
     @Body()
-    createPostDto: CreatePostDto,
+    createPostDto: CreatePostZodDto,
   ) {
-    return this.postService.create(createPostDto);
+    return this.postService.create(createPostDto); // Check types from service
   }
 
   @Get()

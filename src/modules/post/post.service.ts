@@ -6,7 +6,8 @@ import { Repository } from 'typeorm';
 import { posts } from '@/drizzle/schema';
 import { DrizzleService } from '@/modules/database/drizzle/drizzle.service';
 
-import { CreatePostDto } from './dto/create-post.dto';
+// import { CreatePostDto } from './dto/create-post.dto';
+import { CreatePostZodDto } from './dto/create-post-zod.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { Post } from './entities/post.entity';
 
@@ -17,7 +18,7 @@ export class PostService {
     @InjectRepository(Post) private postRepository: Repository<Post>,
   ) {}
 
-  async create(createPostDto: CreatePostDto) {
+  async create(createPostDto: CreatePostZodDto) {
     // return await this.drizzle.db
     //   .insert(posts)
     //   .values(createPostDto)
